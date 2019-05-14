@@ -1,0 +1,12 @@
+/.project
+**/*.iml
+php
+php/
+license/output/
+**/target
+.settings
+report/logs
+**/.project
+.idea
+**/.classpath
+
