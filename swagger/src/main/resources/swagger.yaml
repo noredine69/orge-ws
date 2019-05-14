@@ -1,0 +1,122 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Orge Api Webservice"
+paths:
+  /rule:
+    post:
+      operationId: "addRule"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Rule"
+      responses:
+        200:
+          description: "successful operation"
+  /fee:
+    post:
+      operationId: "computeFee"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/FeeRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Fee"
+definitions:
+  Fee:
+    type: "object"
+    properties:
+      fees:
+        type: "integer"
+        format: "int32"
+      rease:
+        type: "string"
+  FeeRequest:
+    type: "object"
+    properties:
+      client:
+        $ref: "#/definitions/Ip"
+      freelancer:
+        $ref: "#/definitions/Ip"
+      mission:
+        $ref: "#/definitions/MissionDuration"
+      commercialrelation:
+        $ref: "#/definitions/CommercialRelation"
+  CommercialRelation:
+    type: "object"
+    properties:
+        firstmission :
+          type: string
+          format: date-time
+        last_mission :
+          type: string
+          format: date-time
+  MissionDuration:
+    type: "object"
+    properties:
+      length:
+        type : "string"
+  Ip:
+    type: "object"
+    properties:
+      ip:
+        type : "string"
+  Rule:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      rate :
+        $ref: "#/definitions/Rate"
+      restrictions:
+        $ref: "#/definitions/RuleRestrictions"
+  RuleRestrictions:
+    type: "object"
+    properties:
+      '@or':
+        $ref: "#/definitions/OrCondition"
+      '@and':
+        $ref: "#/definitions/AndCondition"
+      '@client.location':
+        $ref: "#/definitions/RestrictionCountry"
+      '@commercialrelation.location':
+        $ref: "#/definitions/RestrictionCountry"
+  RestrictionCountry:
+    type: "object"
+    properties:
+      country:
+        type: "string"
+        pattern: '^[A-Z]{3}$'
+  OrCondition:
+    type: "array"
+    items:
+      $ref: "#/definitions/RuleRestrictions"
+  AndCondition:
+    type: "array"
+    items:
+      $ref: "#/definitions/RuleRestrictions"
+  Rate:
+    type: "object"
+    properties:
+      percent :
+        type: "integer"
+        format: "int32"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
