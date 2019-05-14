@@ -4,6 +4,7 @@ import com.noredine69.orge.ws.api.FeeApi;
 import com.noredine69.orge.ws.model.FeeDto;
 import com.noredine69.orge.ws.model.FeeRequestDto;
 import io.swagger.annotations.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,9 @@ public class FeeController implements FeeApi{
             consumes = { "application/json" },
             method = RequestMethod.POST)
     public ResponseEntity<FeeDto> computeFee(@ApiParam(value = "", required = true) @Valid @RequestBody FeeRequestDto body) {
-        return null;
+        final FeeDto computatedFee = new FeeDto();
+        computatedFee.setFees(8);
+        computatedFee.setReason("spain or repeat");
+        return new ResponseEntity<FeeDto>(computatedFee, HttpStatus.OK);
     }
 }

@@ -45,7 +45,7 @@ definitions:
       fees:
         type: "integer"
         format: "int32"
-      rease:
+      reason:
         type: "string"
   FeeRequest:
     type: "object"
