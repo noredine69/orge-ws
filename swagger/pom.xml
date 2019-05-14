@@ -10,8 +10,6 @@
     </parent>
     <artifactId>orge-ws-swagger</artifactId>
 
-
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -73,8 +71,8 @@
                                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
                             </configOptions>
                             <templateDirectory>${project.basedir}/src/main/resources/templates</templateDirectory>
-                            <modelPackage>com.magellan.ws.split.model</modelPackage>
-                            <apiPackage>com.magellan.ws.split.api</apiPackage>
+                            <modelPackage>com.noredine69.orge.ws.model</modelPackage>
+                            <apiPackage>com.noredine69.orge.ws.api</apiPackage>
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <modelNameSuffix>Dto</modelNameSuffix>
                             <additionalProperties>

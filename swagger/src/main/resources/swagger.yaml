@@ -95,14 +95,14 @@ definitions:
         $ref: "#/definitions/AndCondition"
       '@client.location':
         $ref: "#/definitions/RestrictionCountry"
-      '@commercialrelation.location':
+      '@freelancer.location':
         $ref: "#/definitions/RestrictionCountry"
   RestrictionCountry:
     type: "object"
     properties:
       country:
         type: "string"
-        pattern: '^[A-Z]{3}$'
+        pattern: '^[A-Z]{2}$'
   OrCondition:
     type: "array"
     items:
