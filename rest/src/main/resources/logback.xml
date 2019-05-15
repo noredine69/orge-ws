@@ -10,15 +10,9 @@
         </encoder>
     </appender>
 
-    <root level="INFO">
+    <root level="ALL">
         <appender-ref ref="STDOUT"/>
     </root>
-
-    <!-- logger enabling sql queries from mapper -->
     <logger name="com.noredine69.orge.ws.controller" level="DEBUG"/>
-    <logger name="org.apache" level="ERROR"/>
-    <logger name="org.springframework" level="ERROR"/>
-    <logger name="org.dbunit" level="ERROR"/>
-    <logger name="javax.faces" level="ERROR"/>
 
 </configuration>
