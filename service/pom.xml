@@ -9,4 +9,24 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>orge-ws-service</artifactId>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.noredine69</groupId>
+                <artifactId>orge-ws-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
