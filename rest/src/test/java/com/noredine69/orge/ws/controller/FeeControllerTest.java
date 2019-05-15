@@ -4,6 +4,7 @@ package com.noredine69.orge.ws.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noredine69.orge.ws.app.SprintBootApplication;
 import com.noredine69.orge.ws.model.FeeRequestDto;
+import com.noredine69.orge.ws.model.IpDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +49,12 @@ public class FeeControllerTest {
     }
 
     FeeRequestDto generateFeeRequest() {
+        IpDto clientIp = new IpDto();
+        clientIp.setIp("217.127.206.227");
+        IpDto freelancerIp = new IpDto();
+        freelancerIp.setIp("217.127.206.227");
         FeeRequestDto feeRequestDto = new FeeRequestDto();
-
-
+        feeRequestDto.client(clientIp).freelancer(freelancerIp);
         return feeRequestDto;
     }
 }

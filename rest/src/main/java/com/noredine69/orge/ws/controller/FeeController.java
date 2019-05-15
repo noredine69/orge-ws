@@ -1,9 +1,12 @@
 package com.noredine69.orge.ws.controller;
 
 import com.noredine69.orge.ws.api.FeeApi;
+import com.noredine69.orge.ws.geoloc.service.GeolocServiceImpl;
 import com.noredine69.orge.ws.model.FeeDto;
 import com.noredine69.orge.ws.model.FeeRequestDto;
 import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
+@Slf4j
 public class FeeController implements FeeApi{
+
+    @Autowired
+    private GeolocServiceImpl geolocService;
 
     @ApiOperation(value = "dddd", nickname = "computeFee", notes = "ccccc", response = FeeDto.class, tags={  })
     @ApiResponses(value = {
@@ -24,6 +31,8 @@ public class FeeController implements FeeApi{
             consumes = { "application/json" },
             method = RequestMethod.POST)
     public ResponseEntity<FeeDto> computeFee(@ApiParam(value = "", required = true) @Valid @RequestBody FeeRequestDto body) {
+        //log.debug("client ip location : " + geolocService.geolocFromIp(body.getClient().getIp()));
+        //log.debug("freelancer ip location : " + geolocService.geolocFromIp(body.getFreelancer().getIp()));
         final FeeDto computatedFee = new FeeDto();
         computatedFee.setFees(8);
         computatedFee.setReason("spain or repeat");

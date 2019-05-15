@@ -26,10 +26,10 @@ public class RuleController implements RuleApi {
                     final Object value = restrictionsMap.get(key);
                     if (value instanceof LinkedHashMap) {
                         final LinkedHashMap maps = (LinkedHashMap) value;
-                        log.debug("restrictions : " + key + "-" + maps.keySet() + "-" + maps.values());
+                        //log.debug("restrictions : " + key + "-" + maps.keySet() + "-" + maps.values());
                     } else if (value instanceof ArrayList) {
                         final ArrayList list = (ArrayList) value;
-                        log.debug("restrictions : " + key + "-" + list.get(0) + "-" + list.get(1));
+                        //log.debug("restrictions : " + key + "-" + list.get(0) + "-" + list.get(1));
                     }
                 }
             }

@@ -10,7 +10,7 @@
         </encoder>
     </appender>
 
-    <root level="ALL">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
     <logger name="com.noredine69.orge.ws.controller" level="DEBUG"/>

@@ -1,3 +1,4 @@
+drop table student;
 create table student
 (
    id integer not null,
