@@ -31,6 +31,8 @@
         <dozer.version>5.5.1</dozer.version>
         <jjwt.version>0.9.0</jjwt.version>
         <jackson-datatype-threetenbp.version>2.6.4</jackson-datatype-threetenbp.version>
+        <lombok.version>1.16.10</lombok.version>
+        <h2database.version>1.4.194</h2database.version>
     </properties>
 
     <dependencyManagement>
@@ -120,6 +122,16 @@
                 <artifactId>servlet-api</artifactId>
                 <version>3.0-alpha-1</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2database.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

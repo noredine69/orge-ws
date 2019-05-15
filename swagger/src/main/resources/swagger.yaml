@@ -85,18 +85,20 @@ definitions:
       rate :
         $ref: "#/definitions/Rate"
       restrictions:
-        $ref: "#/definitions/RuleRestrictions"
+        type: "object"
+        #$ref: "#/definitions/RuleRestrictions"
+
   RuleRestrictions:
     type: "object"
-    properties:
-      '@or':
-        $ref: "#/definitions/OrCondition"
-      '@and':
-        $ref: "#/definitions/AndCondition"
-      '@client.location':
-        $ref: "#/definitions/RestrictionCountry"
-      '@freelancer.location':
-        $ref: "#/definitions/RestrictionCountry"
+#    properties:
+#      '@or':
+#        $ref: "#/definitions/OrCondition"
+#      '@and':
+#        $ref: "#/definitions/AndCondition"
+#      '@client.location':
+#        $ref: "#/definitions/RestrictionCountry"
+#      '@freelancer.location':
+#        $ref: "#/definitions/RestrictionCountry"
   RestrictionCountry:
     type: "object"
     properties:
