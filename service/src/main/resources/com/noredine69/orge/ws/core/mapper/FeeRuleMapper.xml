@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noredine69.orge.ws.core.mapper.FeeRuleMapper">
+    <resultMap id="FeeRuleResultMap" type="com.noredine69.orge.ws.core.model.FeeRule">
+        <id column="id"                     property="id" />
+        <result column="name"               property="name" />
+        <result column="rate"               property="rate" />
+        <result column="sql_restrictions"   property="sqlRestrictions" />
+        <result column="is_default"         property="isDefault" />
+    </resultMap>
+    <sql id="BasicSelect">
+        select id, name, rate, sql_restrictions from fee_rule
+    </sql>
+    <select id="findAllFeeRule" resultMap="FeeRuleResultMap">
+        <include refid="BasicSelect"/>
+    </select>
+    <select id="findFeeRuleById" resultMap="FeeRuleResultMap">
+        <include refid="BasicSelect"/>
+        WHERE id=#{id}
+    </select>
+    <insert id="insertFeeRule">
+        insert into fee_rule
+        (
+          id,
+          name,
+          rate,
+          sql_restrictions,
+          is_default
+        )values(
+          #{feeRule.id},
+          #{feeRule.name},
+          #{feeRule.rate},
+          #{feeRule.sqlRestrictions},
+          <if test="feeRule.isDefault">
+            '1'
+          </if>
+          <if test="!feeRule.isDefault">
+            '0'
+          </if>
+        )
+    </insert>
+</mapper>

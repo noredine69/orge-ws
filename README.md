@@ -70,9 +70,6 @@ Flux d'exemple :
 
 
 TODO :
-- Mise en place des Mapper MyBatis
-- Création du model de données pour le stockage des règles, et des frais
-- Stockage des règles en bdd (base H2 actuellement)
 - Calcul des frais selon les règles stockées
 - Refactoring (y'en a surement besoin) : parsing des règles en entrée avec GSON
 - Mise en place d'un système d'authentification (avec jeton JWT) et un endpoint spécifique:
@@ -90,3 +87,6 @@ DONE:
 - Accès de l'interface SwaggerUI
 - Création du service de Geolocation avec IpStack
 - Support des datetime en entrée avec ThreeTen
+- Mise en place des Mapper MyBatis
+- Création du model de données pour le stockage des règles, et des frais
+- Stockage des règles en bdd (base H2 actuellement)

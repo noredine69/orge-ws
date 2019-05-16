@@ -1,5 +1,6 @@
 package com.noredine69.orge.ws.config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-//@EnableWebMvc
+@MapperScan("com.noredine69.orge.ws.core.mapper")
 @EnableSwagger2
 @Service
-public class ConfigurationApplication /*extends WebMvcConfigurerAdapter*/ {
+public class ConfigurationApplication {
     //@formatter:off
     @Bean
     public Docket api() {
@@ -25,15 +26,5 @@ public class ConfigurationApplication /*extends WebMvcConfigurerAdapter*/ {
                 .directModelSubstitute(org.threeten.bp.LocalDate.class, java.sql.Date.class)
                 .directModelSubstitute(org.threeten.bp.OffsetDateTime.class, java.util.Date.class);
     }
-
-/*
-    @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-    */
     //@formatter:on
 }
