@@ -70,6 +70,8 @@ Flux d'exemple :
 
 
 TODO :
+- Ajouter les champs country client, et freelancer
+- Parsing des durées et stockage en bdd
 - Calcul des frais selon les règles stockées
 - Refactoring (y'en a surement besoin) : parsing des règles en entrée avec GSON
 - Mise en place d'un système d'authentification (avec jeton JWT) et un endpoint spécifique:
