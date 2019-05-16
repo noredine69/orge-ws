@@ -23,7 +23,6 @@ public class BasicControllerTest {
 
     @Test
     public void getRootResources() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+        this.mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON)).andExpect(status().isFound());
     }
 }

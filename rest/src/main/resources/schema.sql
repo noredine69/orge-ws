@@ -1,4 +1,4 @@
-drop table student;
+drop table if exists student;
 create table student
 (
    id integer not null,

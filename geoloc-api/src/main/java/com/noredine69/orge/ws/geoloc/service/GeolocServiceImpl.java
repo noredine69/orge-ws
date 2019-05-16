@@ -20,8 +20,13 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 @Service("geolocServiceImpl")
 @Slf4j
-public class GeolocServiceImpl implements  GeolocService{
+public class GeolocServiceImpl implements GeolocService {
 
+    private final String ACCESS_KEY = "access_key";
+    private final String FIELDS_KEY = "fields";
+    private final String FIELDS_VALUE = "ip,country_code";
+    private final String OUTPUT_KEY = "output";
+    private final String OUTPUT_VALUE = "json";
     @Value("${geoloc.provider.url}")
     private String providerUrl;
     @Value("${geoloc.provider.access_key}")
@@ -29,11 +34,6 @@ public class GeolocServiceImpl implements  GeolocService{
     private WebTarget webTarget;
     private Client client;
     private JacksonJsonProvider jacksonJsonProvider;
-    private final String ACCESS_KEY = "access_key";
-    private final String FIELDS_KEY="fields";
-    private final String FIELDS_VALUE="ip,country_code";
-    private final String OUTPUT_KEY="output";
-    private final String OUTPUT_VALUE="json";
 
     @PostConstruct
     public void init() {
@@ -42,19 +42,19 @@ public class GeolocServiceImpl implements  GeolocService{
 
         final ClientConfig clientConfig = new ClientConfig(this.jacksonJsonProvider);
         this.client = this.getClientBuilder().withConfig(clientConfig).build();
-        this.webTarget = this.client.target(providerUrl);
+        this.webTarget = this.client.target(this.providerUrl);
     }
 
     ClientBuilder getClientBuilder() {
         return ClientBuilder.newBuilder();
     }
 
-    public IpLocation geolocFromIp(String ip) {
+    public IpLocation geolocFromIp(final String ip) {
         IpLocation ipLocation = null;
-        Response response = this.webTarget.path(ip).queryParam(ACCESS_KEY, providerAccessKey).queryParam(FIELDS_KEY, FIELDS_VALUE).queryParam(OUTPUT_KEY, OUTPUT_VALUE).request(MediaType.APPLICATION_JSON).get();
+        final Response response = this.webTarget.path(ip).queryParam(this.ACCESS_KEY, this.providerAccessKey).queryParam(this.FIELDS_KEY, this.FIELDS_VALUE).queryParam(this.OUTPUT_KEY, this.OUTPUT_VALUE).request(MediaType.APPLICATION_JSON).get();
         if (response.getStatus() == HTTP_OK) {
-            ipLocation= response.readEntity(IpLocation.class);
-            //log.debug("Receive json object from provider {}", ipLocation);
+            ipLocation = response.readEntity(IpLocation.class);
+            log.debug("Receive json object from provider {}", ipLocation);
             try {
                 response.close();
             } catch (final Exception e) {
