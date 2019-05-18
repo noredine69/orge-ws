@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.ClientConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.client.Client;
@@ -15,6 +16,9 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -27,9 +31,9 @@ public class GeolocServiceImpl implements GeolocService {
     private final String FIELDS_VALUE = "ip,country_code";
     private final String OUTPUT_KEY = "output";
     private final String OUTPUT_VALUE = "json";
-    @Value("${geoloc.provider.url}")
+    @Value("${geoloc.provider.url} ?: http://api.ipstack.com/")
     private String providerUrl;
-    @Value("${geoloc.provider.access_key}")
+    @Value("${geoloc.provider.access_key} ?: 69f738f29e62fcec458543adcfad142a")
     private String providerAccessKey;
     private WebTarget webTarget;
     private Client client;
@@ -37,30 +41,52 @@ public class GeolocServiceImpl implements GeolocService {
 
     @PostConstruct
     public void init() {
-        this.jacksonJsonProvider = new JacksonJaxbJsonProvider();
-        this.jacksonJsonProvider.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        if(checkIpStackConnectionParams()) {
+            this.jacksonJsonProvider = new JacksonJaxbJsonProvider();
+            this.jacksonJsonProvider.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        final ClientConfig clientConfig = new ClientConfig(this.jacksonJsonProvider);
-        this.client = this.getClientBuilder().withConfig(clientConfig).build();
-        this.webTarget = this.client.target(this.providerUrl);
+            final ClientConfig clientConfig = new ClientConfig(this.jacksonJsonProvider);
+            this.client = this.getClientBuilder().withConfig(clientConfig).build();
+            this.webTarget = this.client.target(this.providerUrl);
+        }
     }
 
-    ClientBuilder getClientBuilder() {
+    private boolean checkIpStackConnectionParams() {
+        return StringUtils.isNotEmpty(providerUrl) && StringUtils.isNotEmpty(providerAccessKey) && isValidURL(providerUrl);
+    }
+
+    private boolean isValidURL(String urlStr) {
+        try {
+            URL url = new URL(urlStr);
+            return true;
+        }
+        catch (MalformedURLException e) {
+            return false;
+        }
+    }
+
+    public ClientBuilder getClientBuilder() {
         return ClientBuilder.newBuilder();
     }
 
     public IpLocation geolocFromIp(final String ip) {
         IpLocation ipLocation = null;
-        final Response response = this.webTarget.path(ip).queryParam(this.ACCESS_KEY, this.providerAccessKey).queryParam(this.FIELDS_KEY, this.FIELDS_VALUE).queryParam(this.OUTPUT_KEY, this.OUTPUT_VALUE).request(MediaType.APPLICATION_JSON).get();
+        //@formatter:off
+        final Response response = this.webTarget.path(ip).queryParam(this.ACCESS_KEY, this.providerAccessKey)
+                .queryParam(this.FIELDS_KEY, this.FIELDS_VALUE)
+                .queryParam(this.OUTPUT_KEY, this.OUTPUT_VALUE)
+                .request(MediaType.APPLICATION_JSON).get();
+        //@formatter:on
         if (response.getStatus() == HTTP_OK) {
             ipLocation = response.readEntity(IpLocation.class);
             log.debug("Receive json object from provider {}", ipLocation);
-            try {
-                response.close();
-            } catch (final Exception e) {
-                //log.error("Exception unserializing object from json response {}", e);
-            }
         }
+        try {
+            response.close();
+        } catch (final Exception e) {
+            log.error("Exception unserializing object from json response {}", e);
+        }
+
         return ipLocation;
     }
 
