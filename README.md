@@ -73,6 +73,7 @@ TODO :
 - Ajouter les champs country client, et freelancer
 - Parsing des durées et stockage en bdd
 - Calcul des frais selon les règles stockées
+- Ajout d'un package Core notamment pour la gestion des exceptions et erreur
 - Refactoring (y'en a surement besoin) : parsing des règles en entrée avec GSON
 - Mise en place d'un système d'authentification (avec jeton JWT) et un endpoint spécifique:
   - d'abord via API-KEY stockée en dur dans un fichier de conf
