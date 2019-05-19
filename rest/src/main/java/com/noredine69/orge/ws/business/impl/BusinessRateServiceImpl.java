@@ -6,6 +6,7 @@ import com.noredine69.orge.ws.converter.DurationConverter;
 import com.noredine69.orge.ws.core.model.FeeRule;
 import com.noredine69.orge.ws.core.model.SearchRuleCriteria;
 import com.noredine69.orge.ws.core.service.FeeRuleService;
+import com.noredine69.orge.ws.geoloc.model.IpLocation;
 import com.noredine69.orge.ws.geoloc.service.GeolocServiceImpl;
 import com.noredine69.orge.ws.model.FeeDto;
 import com.noredine69.orge.ws.model.FeeRequestDto;
@@ -18,12 +19,9 @@ import org.threeten.bp.temporal.ChronoUnit;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.jar.JarEntry;
 
 @Slf4j
@@ -32,7 +30,7 @@ public class BusinessRateServiceImpl implements BusinessRateService {
 
     public static final String ORGE_WS_SERVICE = "orge-ws-service";
     public static final String JAR = "jar";
-    @Value("temp.dir")
+    @Value("${temp.dir}")
     private String tempDir;
 
     @Autowired
@@ -83,7 +81,7 @@ public class BusinessRateServiceImpl implements BusinessRateService {
                     "import com.noredine69.orge.ws.core.service.ComputeRule;\n"+
                     "import com.noredine69.orge.ws.core.model.SearchRuleCriteria;\n"+
                     "public class ComputeRuleImpl%d implements ComputeRule {\n" +
-                    "    public boolean checkRule(final String criteria, final SearchRuleCriteria searchRuleCriteria) {\n" +
+                    "    public boolean checkRule(final SearchRuleCriteria searchRuleCriteria) {\n" +
                     "       return (%s);\n"+
                     "    }\n" +
                     "}\n";
@@ -97,7 +95,7 @@ public class BusinessRateServiceImpl implements BusinessRateService {
             Class aClass = CompilerUtils.CACHED_COMPILER.loadFromJava(COMPUTE_RULE_CLASSNAME+id, javaCode);
             ComputeRule computeRule = (ComputeRule) aClass.newInstance();
             log.debug("criteria {} searchRuleCriteria {} id {} ", criteria, searchRuleCriteria, id);
-            return computeRule.checkRule("test", searchRuleCriteria);
+            return computeRule.checkRule(searchRuleCriteria);
         }catch (IllegalAccessException  | InstantiationException | ClassNotFoundException e ){
             log.error("Error during executing runtime generated Java code {} {}", criteria, e);
         }finally {
@@ -148,29 +146,13 @@ public class BusinessRateServiceImpl implements BusinessRateService {
         return null;
     }
 
-    /*
-    {
-       "client":{
-          "ip":"217.127.206.227"
-       },
-       "freelancer":{
-          "ip":"217.127.206.227"
-       },
-       "mission":{
-          "length":"4months"
-       },
-       "commercialrelation":{
-          "firstmission":"2018-04-16 13:24:17.510Z",
-          "last_mission":"2018-07-16 14:24:17.510Z"
-       }
-    }
-     */
-
     @Override
     public FeeDto searchRate(FeeRequestDto feeRequestDto) {
-        log.debug("client ip location : " + this.geolocService.geolocFromIp(feeRequestDto.getClient().getIp()));
-        log.debug("freelancer ip location : " + this.geolocService.geolocFromIp(feeRequestDto.getFreelancer().getIp()));
-        for(FeeRule feeRule : feeRuleService.findNotDefaultFeeRule()){
+        final IpLocation clientIpLocation = this.geolocService.geolocFromIp(feeRequestDto.getClient().getIp());
+        log.debug("client ip location : " + clientIpLocation);
+        final IpLocation freelanceIpLocation = this.geolocService.geolocFromIp(feeRequestDto.getFreelancer().getIp());
+        log.debug("freelance ip location : " + freelanceIpLocation);
+        for(FeeRule feeRule : feeRuleService.findNotDefaultFeeRuleWithLocation(freelanceIpLocation.getCountry_code(), clientIpLocation.getCountry_code())){
             String criteria = feeRule.getSqlRestrictions();
             long days = ChronoUnit.DAYS.between(feeRequestDto.getCommercialrelation().getFirstmission(),
                     feeRequestDto.getCommercialrelation().getLastMission());

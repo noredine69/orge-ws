@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.noredine69.orge.ws.core.model.FeeRule;
 import com.noredine69.orge.ws.model.RuleDto;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ import java.util.LinkedHashMap;
 public class FeeRuleConverter {
 
     private static final String SEARCH_CRITERIA_INSTANCE_GETTER ="searchRuleCriteria.get";
+    public static final String COUNTRY = "country";
+    public static final String FREELANCER_LOCATION = "@freelancer.location";
+    public static final String CLIENT_LOCATION = "@client.location";
 
     private FeeRuleConverter(){}
 
@@ -33,6 +37,7 @@ public class FeeRuleConverter {
                         //@freelancer.location-[country]-[ES]
                         //@client.location-[country]-[ES]
                         convertLocationCriteria(key.toString(), mapsCriteria);
+                        readLocationCoutryCriteria(feeRule, key, mapsCriteria);
                     } else if (value instanceof ArrayList) {
                         final ArrayList listCriteria = (ArrayList) value;
                         log.debug("restrictions : " + key + "-" + listCriteria);
@@ -47,6 +52,20 @@ public class FeeRuleConverter {
             feeRule.setRate(body.getRate().getPercent().longValue());
         }
         return feeRule;
+    }
+
+    private static void readLocationCoutryCriteria(FeeRule feeRule, String key, LinkedHashMap mapsCriteria) {
+        final String country = (String) mapsCriteria.get(COUNTRY);
+        if(StringUtils.isNotBlank(country)) {
+            switch (key) {
+                case FREELANCER_LOCATION:
+                    feeRule.setFreelancerLocationCountry(country);
+                    break;
+                case CLIENT_LOCATION:
+                    feeRule.setClientLocationCountry(country);
+                    break;
+            }
+        }
     }
 
     private static String convertLocationCriteria(final String fieldName, final LinkedHashMap listOperand){

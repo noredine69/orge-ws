@@ -8,6 +8,7 @@ public interface FeeRuleService {
     void insertFeeRule(FeeRule feeRule);
     FeeRule findFeeRuleById(Integer id);
     List<FeeRule> findAllFeeRule();
+    List<FeeRule> findNotDefaultFeeRuleWithLocation(final String freelancerCountryIso2, final String clientCountryIso2);
     List<FeeRule> findNotDefaultFeeRule();
     FeeRule findDefaultFeeRule();
 }

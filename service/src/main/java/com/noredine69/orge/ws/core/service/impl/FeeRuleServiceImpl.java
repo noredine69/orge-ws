@@ -32,6 +32,10 @@ public class FeeRuleServiceImpl implements FeeRuleService {
         return feeRuleMapper.findAllFeeRule();
     }
 
+    public List<FeeRule> findNotDefaultFeeRuleWithLocation(String freelancerCountryIso2, String clientCountryIso2) {
+        return feeRuleMapper.findNotDefaultFeeRuleWithLocation(freelancerCountryIso2, clientCountryIso2);
+    }
+
     public List<FeeRule> findNotDefaultFeeRule() {
         return feeRuleMapper.findNotDefaultFeeRule();
     }

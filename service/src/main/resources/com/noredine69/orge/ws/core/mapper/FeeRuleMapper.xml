@@ -9,12 +9,25 @@
         <result column="rate"               property="rate" />
         <result column="sql_restrictions"   property="sqlRestrictions" />
         <result column="is_default"         property="isDefault" />
+        <result column="freelancer_location" property="freelancerLocationCountryId" />
+        <result column="client_location" property="clientLocationCountryId" />
     </resultMap>
     <sql id="BasicSelect">
-        select id, name, rate, sql_restrictions from fee_rule
+        select fr.id as id , fr.name as name, fr.rate as rate , fr.sql_restrictions as sql_restrictions from fee_rule fr
     </sql>
     <select id="findAllFeeRule" resultMap="FeeRuleResultMap">
         <include refid="BasicSelect"/>
+    </select>
+    <select id="findNotDefaultFeeRuleWithLocation" resultMap="FeeRuleResultMap">
+        <include refid="BasicSelect"/>
+        INNER JOIN country freelancerCountry
+        ON fr.freelancer_location = freelancerCountry.code
+        INNER JOIN country clientCountry
+        ON fr.freelancer_location = clientCountry.code
+        WHERE
+        freelancerCountry.iso2 = #{freelancerCountryIso2} AND
+        clientCountry.iso2 = #{clientCountryIso2} AND
+        fr.is_default = '0'
     </select>
     <select id="findFeeRuleById" resultMap="FeeRuleResultMap">
         <include refid="BasicSelect"/>
@@ -37,11 +50,15 @@
         (
           name,
           rate,
+          freelancer_location,
+          client_location,
           sql_restrictions,
           is_default
         )values(
           #{feeRule.name},
           #{feeRule.rate},
+          #{feeRule.freelancerLocationCountryId},
+          #{feeRule.clientLocationCountryId},
           #{feeRule.sqlRestrictions},
           <if test="feeRule.isDefault">
             '1'
