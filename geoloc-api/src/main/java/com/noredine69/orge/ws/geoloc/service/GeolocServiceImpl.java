@@ -31,9 +31,11 @@ public class GeolocServiceImpl implements GeolocService {
     private final String FIELDS_VALUE = "ip,country_code";
     private final String OUTPUT_KEY = "output";
     private final String OUTPUT_VALUE = "json";
-    @Value("${geoloc.provider.url} ?: http://api.ipstack.com/")
+    // ?: http://api.ipstack.com/
+    @Value("${geoloc.provider.url}")
     private String providerUrl;
-    @Value("${geoloc.provider.access_key} ?: 69f738f29e62fcec458543adcfad142a")
+    // ?: 69f738f29e62fcec458543adcfad142a
+    @Value("${geoloc.provider.access_key}")
     private String providerAccessKey;
     private WebTarget webTarget;
     private Client client;

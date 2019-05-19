@@ -13,5 +13,7 @@ public class FeeRule {
     private String name;
     private long rate;
     private String sqlRestrictions;
+    private long freelancerLocationCountry;
+    private long clientLocationCountry;
     private boolean isDefault;
 }

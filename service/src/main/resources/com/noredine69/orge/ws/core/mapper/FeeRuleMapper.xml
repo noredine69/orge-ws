@@ -20,16 +20,26 @@
         <include refid="BasicSelect"/>
         WHERE id=#{id}
     </select>
-    <insert id="insertFeeRule">
+
+    <select id="findDefaultFeeRule" resultMap="FeeRuleResultMap">
+        <include refid="BasicSelect"/>
+        WHERE is_default = '1'
+    </select>
+
+    <select id="findNotDefaultFeeRule" resultMap="FeeRuleResultMap">
+        <include refid="BasicSelect"/>
+        WHERE is_default = '0'
+    </select>
+
+    <insert id="insertFeeRule" parameterType="com.noredine69.orge.ws.core.model.FeeRule"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
         insert into fee_rule
         (
-          id,
           name,
           rate,
           sql_restrictions,
           is_default
         )values(
-          #{feeRule.id},
           #{feeRule.name},
           #{feeRule.rate},
           #{feeRule.sqlRestrictions},

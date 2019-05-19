@@ -13,7 +13,6 @@ import java.util.List;
 @Transactional
 public class FeeRuleServiceImpl implements FeeRuleService {
 
-
     private final FeeRuleMapper feeRuleMapper;
 
     @Autowired
@@ -23,7 +22,6 @@ public class FeeRuleServiceImpl implements FeeRuleService {
 
     public void insertFeeRule(FeeRule feeRule) {
         feeRuleMapper.insertFeeRule(feeRule);
-
     }
 
     public FeeRule findFeeRuleById(Integer id) {
@@ -32,5 +30,13 @@ public class FeeRuleServiceImpl implements FeeRuleService {
 
     public List<FeeRule> findAllFeeRule() {
         return feeRuleMapper.findAllFeeRule();
+    }
+
+    public List<FeeRule> findNotDefaultFeeRule() {
+        return feeRuleMapper.findNotDefaultFeeRule();
+    }
+
+    public FeeRule findDefaultFeeRule() {
+        return feeRuleMapper.findDefaultFeeRule();
     }
 }

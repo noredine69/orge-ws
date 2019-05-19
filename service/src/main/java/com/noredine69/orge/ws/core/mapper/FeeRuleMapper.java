@@ -9,4 +9,6 @@ public interface FeeRuleMapper {
     void insertFeeRule(@Param("feeRule") FeeRule feeRule);
     FeeRule findFeeRuleById(@Param("id") Integer id);
     List<FeeRule> findAllFeeRule();
+    FeeRule findDefaultFeeRule();
+    List<FeeRule> findNotDefaultFeeRule();
 }

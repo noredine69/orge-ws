@@ -1,6 +1,7 @@
 package com.noredine69.orge.ws.controller;
 
 import com.noredine69.orge.ws.api.FeeApi;
+import com.noredine69.orge.ws.business.impl.BusinessRateServiceImpl;
 import com.noredine69.orge.ws.core.service.FeeRuleService;
 import com.noredine69.orge.ws.geoloc.service.GeolocServiceImpl;
 import com.noredine69.orge.ws.model.FeeDto;
@@ -21,28 +22,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@RestController
 @Slf4j
+@RestController
 public class FeeController implements FeeApi {
 
     @Autowired
-    private GeolocServiceImpl geolocService;
+    private BusinessRateServiceImpl businessRateService;
 
-    @Autowired
-    private FeeRuleService feeRuleService;
-
-    @ApiOperation(value = "", nickname = "computeFee", notes = "", response = FeeDto.class, tags = {})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "successful operation", response = FeeDto.class)})
-    @RequestMapping(value = "/fee", produces = {"application/json"}, consumes = {"application/json"}, method = RequestMethod.POST)
     public ResponseEntity<FeeDto> computeFee(@ApiParam(value = "", required = true) @Valid @RequestBody final FeeRequestDto body) {
-        //log.debug("client ip location : " + this.geolocService.geolocFromIp(body.getClient().getIp()));
-        //log.debug("freelancer ip location : " + this.geolocService.geolocFromIp(body.getFreelancer().getIp()));
-        System.out.println("client ip location : " + this.geolocService.geolocFromIp(body.getClient().getIp()));
-        System.out.println("freelancer ip location : " + this.geolocService.geolocFromIp(body.getFreelancer().getIp()));
-        System.out.println("feerule : "+feeRuleService.findAllFeeRule());
-        final FeeDto computatedFee = new FeeDto();
-        computatedFee.setFees(8);
-        computatedFee.setReason("spain or repeat");
-        return new ResponseEntity<FeeDto>(computatedFee, HttpStatus.OK);
+        try {
+            FeeDto feeDto = this.businessRateService.searchRate(body);
+            return new ResponseEntity<>(feeDto, HttpStatus.OK);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

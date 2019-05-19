@@ -168,5 +168,8 @@
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-compiler-api:2.7" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-compiler-manager:2.7" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.plexus:plexus-compiler-javac:2.7" level="project" />
+    <orderEntry type="library" name="Maven: org.jooq:joor-java-8:0.9.11" level="project" />
+    <orderEntry type="library" name="Maven: net.openhft:compiler:2.3.4" level="project" />
+    <orderEntry type="library" name="Maven: com.intellij:annotations:12.0" level="project" />
   </component>
 </module>

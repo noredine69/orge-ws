@@ -62,8 +62,8 @@ Flux d'exemple :
       "length":"4months"
    },   
    "commercialrelation":{  
-      "firstmission":"2018-04-16 13:24:17.510Z",
-      "last_mission":"2018-07-16 14:24:17.510Z"
+      "firstmission":"2018-04-16T13:24:17.510Z",
+      "last_mission":"2018-07-16T14:24:17.510Z"
    }
 }
 
@@ -93,3 +93,4 @@ DONE:
 - Mise en place des Mapper MyBatis
 - Création du model de données pour le stockage des règles, et des frais
 - Stockage des règles en bdd (base H2 actuellement)
+- Ajout de l'incrément sur la PK des FeeRule

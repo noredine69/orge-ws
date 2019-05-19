@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noredine69.orge.ws.core.mapper.CountryMapper">
+    <resultMap id="CountryResultMap" type="com.noredine69.orge.ws.core.model.Country">
+        <id column="code"                     property="code" />
+        <result column="name"               property="name" />
+        <result column="iso2"               property="iso2" />
+        <result column="iso3"               property="iso3" />
+    </resultMap>
+
+    <sql id="BasicSelect">
+        select code, name, iso2, iso3 from country
+    </sql>
+
+    <select id="findCountryCode" resultMap="CountryResultMap">
+        <include refid="BasicSelect"/>
+        WHERE code=#{code}
+    </select>
+    <select id="findCountryIso2" resultMap="CountryResultMap">
+        <include refid="BasicSelect"/>
+        WHERE iso2=#{iso2}
+    </select>
+    <select id="findCountryIso3" resultMap="CountryResultMap">
+        <include refid="BasicSelect"/>
+        WHERE iso3=#{iso3}
+    </select>
+    <select id="findAllCountry" resultMap="CountryResultMap">
+        <include refid="BasicSelect"/>
+        ORDER BY code
+    </select>
+</mapper>

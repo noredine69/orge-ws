@@ -8,4 +8,6 @@ public interface FeeRuleService {
     void insertFeeRule(FeeRule feeRule);
     FeeRule findFeeRuleById(Integer id);
     List<FeeRule> findAllFeeRule();
+    List<FeeRule> findNotDefaultFeeRule();
+    FeeRule findDefaultFeeRule();
 }

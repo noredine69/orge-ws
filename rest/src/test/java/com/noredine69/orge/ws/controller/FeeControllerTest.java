@@ -35,8 +35,7 @@ public class FeeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.fees").value("8"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reason").value("spain or repeat"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.fees").value("10"))
         ;
     }
 
