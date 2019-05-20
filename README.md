@@ -64,6 +64,27 @@ Flux d'exemple :
    }
 }
 
+ - pour les durées ("mission.duration" et "commercialrelation.duration") les valeurs saisies doivent correspondre à la reg ex : "^([0-9]{1,5})(days|months|years)$"
+
+ On peut donc avoir les possibles :
+
+    - 2days
+    - 13months
+    - 25years
+    - 12345days
+En base de données, les durées sont stockées en nombre de jours, les mois correspondent à 30 jours.
+
+
+ Pour le noeud restriction, seules les opérandes logiques "@and" et "@or" sont autorisées.
+ Les opérandes de comparaison sont :
+
+    - "gt" : " > " (greater than)
+    - "lt" : " < " (lower than)
+    - "gte" : " >= " (greater than or equals)
+    - "lte" : " <= " (lower than or equals)
+    - "neq" : " != " (not equals)
+    - "eq" : " == " (equals)
+
 /fee :
 
 {  
