@@ -22,7 +22,7 @@ L'accès au flux est soumis à authentification via API-Key, voici les paramètr
 Nom du Header : Authorization (Champ Authorization dans swaggerUi)
 Valeur : trb5tr94bs651v3r1v6serv51e6EC16E5c136c3e51qzc1z
 
-Accès à la console H2 :
+Accès à la console H2 (non fonctionnel pour le moment):
 
 http://localhost:8080/h2/
 login : sa
@@ -39,11 +39,16 @@ Flux d'exemple :
 /rule :
 {  
    "name":"spain or repeat",
-   "rate":{  
+   
+   "rate":{
+   
       "percent":8
+      
    },
+   
    "restrictions":{  
       "@or":[  
+      
          {  
             "@mission.duration":{  
                "gt":"2months"
@@ -87,10 +92,11 @@ En base de données, les durées sont stockées en nombre de jours, les mois cor
 
 /fee :
 
-{  
-   "client":{  
+{
+   "client":{
+
       "ip":"217.127.206.227"
-   },
+      },
    "freelancer":{  
       "ip":"217.127.206.227"
    },
