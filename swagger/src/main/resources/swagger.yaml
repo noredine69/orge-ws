@@ -5,7 +5,7 @@ info:
   title: "Orge Api Webservice"
 paths:
   /rule:
-    post:
+    put:
       operationId: "addRule"
       consumes:
       - "application/json"
@@ -14,9 +14,10 @@ paths:
       parameters:
         - name: Authorization
           in: header
-          description: bearer authorisation.
+          description: Api key authorisation.
           required: true
           type: string
+          maxLength: 100
         - in: "body"
           name: "body"
           required: true
@@ -25,6 +26,8 @@ paths:
       responses:
         200:
           description: "successful operation"
+        400:
+          description: "Invalid fields"
   /fee:
     post:
       operationId: "computeFee"
@@ -35,9 +38,10 @@ paths:
       parameters:
         - name: Authorization
           in: header
-          description: bearer authorisation.
+          description: Api key authorisation.
           required: true
           type: string
+          maxLength: 100
         - in: "body"
           name: "body"
           required: true
@@ -55,8 +59,13 @@ definitions:
       fees:
         type: "integer"
         format: "int32"
+        minimum: 0
+        exclusiveMinimum: false
+        maximum: 100
       reason:
         type: "string"
+        minLength: 3
+        maxLength: 20
   FeeRequest:
     type: "object"
     properties:
@@ -81,12 +90,17 @@ definitions:
     type: "object"
     properties:
       length:
-        type : "string"
+        $ref: "#/definitions/Duration"
+  Duration:
+    type: "string"
+    pattern: "^([0-9]{1,5})(days|months|years)$"
   Ip:
     type: "object"
     properties:
       ip:
         type : "string"
+        pattern : "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$"
+        example: "127.0.0.1"
   Rule:
     type: "object"
     properties:
@@ -102,6 +116,9 @@ definitions:
       percent :
         type: "integer"
         format: "int32"
+        minimum: 0
+        exclusiveMinimum: false
+        maximum: 100
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
