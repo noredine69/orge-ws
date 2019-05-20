@@ -1,6 +1,7 @@
 package com.noredine69.orge.ws.business.impl;
 
 
+import com.google.gson.Gson;
 import com.noredine69.orge.ws.business.BusinessFeeRuleService;
 import com.noredine69.orge.ws.converter.FeeRuleConverter;
 import com.noredine69.orge.ws.core.model.Country;
@@ -24,7 +25,8 @@ public class BusinessFeeRuleServiceImpl implements BusinessFeeRuleService{
 
     @Override
     public void addNewRule(final RuleDto body) {
-        final FeeRule feeRule = FeeRuleConverter.convertFeeRuleDtoToModel(body);
+        final String serializedRuleDto = serializeRuleDto(body);
+        final FeeRule feeRule = FeeRuleConverter.convertBodyToFeeRule(serializedRuleDto);
         feeRule.setClientLocationCountryId(readCountryCodeFromIso2(feeRule.getClientLocationCountry()));
         feeRule.setFreelancerLocationCountryId(readCountryCodeFromIso2(feeRule.getFreelancerLocationCountry()));
 
@@ -39,5 +41,11 @@ public class BusinessFeeRuleServiceImpl implements BusinessFeeRuleService{
             return clientCountry.getCode();
         }
         return 0;
+    }
+    //It's ugly to deserialize json Data, then serialize, to finally deserialize it!
+    //sorry....
+    private String serializeRuleDto(final RuleDto body) {
+        Gson gson = new Gson();
+        return gson.toJson(body);
     }
 }
