@@ -18,6 +18,10 @@ Pour valider une demande de calcul de frais avec une règle, l'application gén�
  le fat jar de l'application est décompresser dans un répertoire temporaire pour en extraire seulement le jar
  du module service, et de configurer le classpath de la lib avec.
 
+L'accès au flux est soumis à authentification via API-Key, voici les paramètres : 
+Nom du Header : Authorization (Champ Authorization dans swaggerUi)
+Valeur : trb5tr94bs651v3r1v6serv51e6EC16E5c136c3e51qzc1z
+
 Accès à la console H2 :
 
 http://localhost:8080/h2/
@@ -84,13 +88,11 @@ TODO :
 
 - Ajout d'un package Core notamment pour la gestion des exceptions et erreur
 - Refactoring (y'en a surement besoin) : parsing des règles en entrée avec GSON
-- Mise en place d'un système d'authentification (avec jeton JWT) et un endpoint spécifique:
-  - d'abord via API-KEY stockée en dur dans un fichier de conf
-  - puis via authentification login/password stockés en bdd
-- Mise en place de règles de sécurité (csrf, cors, xss etc...)
 - Support de https
 - Etoffer les Tests unitaires, et d'intégration
 - Supprimer les imports inutiles
+- Mise en place d'un système d'authentification (avec jeton JWT) et un endpoint spécifique:
+  - puis via authentification login/password stockés en bdd
 
 
 DONE:
@@ -107,3 +109,6 @@ DONE:
 - Parsing des durées et stockage en bdd
 - Calcul des frais selon les règles stockées
 - Prise en compte du pays du client et du freelance (via la geolocalisation de leur IP)
+- Mise en place d'un système d'authentification (avec jeton JWT) et un endpoint spécifique:
+  - d'abord via API-KEY stockée en dur dans un fichier de conf
+- Mise en place de règles de sécurité (csrf, cors, xss etc...)
