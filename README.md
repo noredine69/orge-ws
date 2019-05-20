@@ -86,14 +86,13 @@ Flux d'exemple :
 
 TODO :
 
-- Ajout d'un package Core notamment pour la gestion des exceptions et erreur
-- Refactoring (y'en a surement besoin) : parsing des règles en entrée avec GSON
+- Corrige l'accès à la console H2 (demande de login)
+- Ajout du script de gitlab-ci
 - Support de https
-- Etoffer les Tests unitaires, et d'intégration
+- Ajouter des tests sur les services d'accès bdd
 - Supprimer les imports inutiles
 - Mise en place d'un système d'authentification (avec jeton JWT) et un endpoint spécifique:
   - puis via authentification login/password stockés en bdd
-
 
 DONE:
 - Initialisation du projet, avec découpage en module (mise en commun des dependances via module bom)
@@ -112,3 +111,8 @@ DONE:
 - Mise en place d'un système d'authentification (avec jeton JWT) et un endpoint spécifique:
   - d'abord via API-KEY stockée en dur dans un fichier de conf
 - Mise en place de règles de sécurité (csrf, cors, xss etc...)
+- Refactoring (y'en a surement besoin) : parsing des règles en entrée avec GSON
+- Etoffer les Tests unitaires, et d'intégration
+
+NOT TO DO ANYMORE :
+- Ajout d'un package Core notamment pour la gestion des exceptions et erreur

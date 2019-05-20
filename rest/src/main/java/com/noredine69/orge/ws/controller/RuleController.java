@@ -31,5 +31,4 @@ public class RuleController implements RuleApi {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

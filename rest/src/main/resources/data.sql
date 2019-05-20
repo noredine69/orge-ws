@@ -1,5 +1,5 @@
 insert into fee_rule (id, name, rate, sql_restrictions, is_default)
-values (1, '', 10, '', '1');
+values (-1, '', 10, '', '1');
 
 insert into country (name, iso2, iso3, code)values ('Afghanistan','AF','AFG',4);
 insert into country (name, iso2, iso3, code)values ('Afrique du Sud','ZA','ZAF',710);
