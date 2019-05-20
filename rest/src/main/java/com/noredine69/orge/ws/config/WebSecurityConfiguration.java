@@ -47,6 +47,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatcher("/**")
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+                .antMatcher("/fee").antMatcher("/rule")
                 .addFilter(filter).authorizeRequests().anyRequest().authenticated()
             .and()
                 .headers().frameOptions().disable()
