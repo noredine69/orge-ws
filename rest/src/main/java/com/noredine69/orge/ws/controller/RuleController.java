@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -20,7 +21,8 @@ public class RuleController implements RuleApi {
     @Autowired
     private BusinessFeeRuleService businessFeeRuleService;
 
-    public ResponseEntity<Void> addRule(@ApiParam(value = "", required = true) @Valid @RequestBody final RuleDto body) {
+    @Override
+    public ResponseEntity<Void> addRule(@ApiParam(value = "bearer authorisation.", required = true) @RequestHeader(value = "Authorization", required = true) final String authorization, @ApiParam(value = "", required = true) @Valid @RequestBody final RuleDto body) {
         try {
             this.businessFeeRuleService.addNewRule(body);
         } catch (final Exception e) {

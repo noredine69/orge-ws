@@ -12,11 +12,16 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/Rule"
+        - name: Authorization
+          in: header
+          description: bearer authorisation.
+          required: true
+          type: string
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Rule"
       responses:
         200:
           description: "successful operation"
@@ -28,11 +33,16 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/FeeRequest"
+        - name: Authorization
+          in: header
+          description: bearer authorisation.
+          required: true
+          type: string
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/FeeRequest"
       responses:
         200:
           description: "successful operation"
@@ -86,33 +96,6 @@ definitions:
         $ref: "#/definitions/Rate"
       restrictions:
         type: "object"
-        #$ref: "#/definitions/RuleRestrictions"
-
-  RuleRestrictions:
-    type: "object"
-#    properties:
-#      '@or':
-#        $ref: "#/definitions/OrCondition"
-#      '@and':
-#        $ref: "#/definitions/AndCondition"
-#      '@client.location':
-#        $ref: "#/definitions/RestrictionCountry"
-#      '@freelancer.location':
-#        $ref: "#/definitions/RestrictionCountry"
-  RestrictionCountry:
-    type: "object"
-    properties:
-      country:
-        type: "string"
-        pattern: '^[A-Z]{2}$'
-  OrCondition:
-    type: "array"
-    items:
-      $ref: "#/definitions/RuleRestrictions"
-  AndCondition:
-    type: "array"
-    items:
-      $ref: "#/definitions/RuleRestrictions"
   Rate:
     type: "object"
     properties:
