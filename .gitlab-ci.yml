@@ -1,0 +1,40 @@
+image: maven:3-jdk-8
+services:
+  - docker:dind
+
+stages:
+  - build
+  - dependency-check
+  - package
+  - deploy
+
+build:
+  stage: build
+  script: mvn clean install
+
+dependency-check:
+  stage: build
+  dependencies:
+  - build
+  script: target/dependency-check-report.html
+  only:
+  - master
+
+package:
+  stage: package
+  dependency:
+  - dependency-check
+  script: mvn clean package -DskipTests
+  artifacts:
+    paths:
+      - rest/target/orge-ws.jar
+  only:
+  - master
+
+deploy:
+  stage: deploy
+  dependency:
+  - package
+  script: java -jar orge-ws.jar
+  only:
+  - master

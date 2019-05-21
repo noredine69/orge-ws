@@ -109,12 +109,12 @@ En base de données, les durées sont stockées en nombre de jours, les mois cor
    }
 }
 
+Attention le script de GitLabCi n'a pas été testé.
 
 
 TODO :
 
 - Corrige l'accès à la console H2 (demande de login)
-- Ajout du script de gitlab-ci
 - Support de https
 - Ajouter des tests sur les services d'accès bdd
 - Supprimer les imports inutiles
@@ -140,6 +140,7 @@ DONE:
 - Mise en place de règles de sécurité (csrf, cors, xss etc...)
 - Refactoring (y'en a surement besoin) : parsing des règles en entrée avec GSON
 - Etoffer les Tests unitaires, et d'intégration
+- Ajout du script de gitlab-ci
 
 NOT TO DO ANYMORE :
 - Ajout d'un package Core notamment pour la gestion des exceptions et erreur
